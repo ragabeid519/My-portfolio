@@ -63,23 +63,8 @@ class FinalThoughtsSection extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(15),
                       child: Image.asset(
-                        'web/assets/profile.jpg', // استبدلها برابط صورتك أو بـ AssetImage
+                        'web/assets/profile.jpg',
                         fit: BoxFit.cover,
-                        // loadingBuilder: (context, child, loadingProgress) {
-                        //   if (loadingProgress == null) return child;
-                        //   return Container(
-                        //     height: 300,
-                        //     color: Colors.grey[200],
-                        //     child: const Center(
-                        //         child: CircularProgressIndicator()),
-                        //   );
-                        // },
-                        // errorBuilder: (context, error, stackTrace) => Container(
-                        //   height: 300,
-                        //   color: Colors.grey[300],
-                        //   child: const Icon(Icons.person,
-                        //       size: 100, color: Colors.grey),
-                        // ),
                       ),
                     ),
                   ),

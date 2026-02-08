@@ -9,12 +9,63 @@ class ProjectsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Map<String, dynamic>> projects = [
-      // ... (نفس قائمة البيانات الخاصة بك بدون تغيير)
+      // قائمة المشاريع مع التفاصيل1
+      {
+        "title": "User Notes App – Smart & Secure Note Taking",
+        "description":
+            "A clean and user-friendly notes application that allows users to create, edit, organize, and manage personal notes efficiently with a focus on performance and simplicity.",
+        "image": "web/assets/user_notes_app.png",
+        "technologies": "Flutter, Dart, Provider, SQLite, Clean Architecture",
+        "keyFeatures":
+            """📝 Create & Edit Notes: Smooth note creation with real-time updates.
+
+🗂️ Organized Notes: Categorize and search notes easily.
+
+💾 Local Persistence: Offline-first experience using SQLite.
+
+🎨 Responsive UI: Adaptive layout for mobile, tablet, and web.
+
+🌙 Dark Mode Support: Fully responsive colors with system theme.""",
+        "impact":
+            """Improved Productivity: Enabled users to manage daily thoughts and tasks efficiently.
+
+Technical Growth: Demonstrated strong understanding of local databases, state management, and clean architecture.
+
+UX Focus: Delivered a minimal and distraction-free interface with smooth performance.""",
+        "github": "https://github.com/ragabeid519/user-notes-app"
+      },
+      {
+        "title": "Cairo Metro Planner Pro: Smart Transit & Location-Aware App",
+        "description":
+            "Cairo Metro Planner Pro is a high-performance mobile application designed to revolutionize the commuting experience in Egypt's capital. Built with Flutter and GetX, the app goes beyond simple route mapping by integrating real-time Geolocation intelligence. It solves the common commuter's struggle of finding the nearest station in unfamiliar areas and provides a precise, automated guide through Cairo's complex three-line underground network, including the latest expansions and branches.",
+        "image": "web/assets/metro_app_linkedin.jpg",
+        "technologies":
+            "Flutter, Dart, GetX, Geolocator API, Google Maps Integration.",
+        "keyFeatures":
+            """📍 Smart Proximity Engine: Utilizes GPS and the Haversine Algorithm to instantly calculate and suggest the nearest metro entry point based on the user's live coordinates.
+
+🧠 Intelligent Pathfinding: A custom-built algorithm that handles multi-line transfers and the intricate branching of Line 3 (Imbaba & Cairo University directions) to ensure the most efficient path.
+
+💰 Automated Fare System: A dynamic pricing engine that calculates ticket costs (8, 10, 15, or 20 EGP) and travel duration in real-time based on the latest official tariffs.
+
+🏗️ Clean Architecture: Developed using a strict Controller-Service-Model pattern with GetX, ensuring a highly responsive UI and a scalable, maintainable codebase.
+
+🗺️ Direct Navigation: Integrated with Google Maps API to provide seamless turn-by-turn directions from the user’s current location to the station gate.""",
+        "impact":
+            """User Empowerment: Reduced the \"decision fatigue\" for commuters by automating station selection and route planning, saving time and effort.
+
+Technical Excellence: Demonstrated mastery in handling Spatial Data and complex Data Structures to represent the metro network as a searchable graph.
+
+Robust Reliability: Achieved a high level of app stability by implementing custom error-handling layers to manage location permission states and network connectivity issues gracefully.
+
+Optimized Performance: Leveraged reactive programming to ensure that calculations are performed in the background without affecting the smooth 60 FPS user experience.""",
+        "github": "https://github.com/ragabeid519/metro-app.git"
+      },
       {
         "title": "SwiftConnect Messenger",
         "description":
             "A real-time chat application designed for seamless communication, offering instant messaging and media sharing.",
-        "image": "web/assets/swift_connect.png", // استبدلها بمسار الصورة الفعلي
+        "image": "web/assets/swift_connect.png",
         "technologies": "Flutter, Firebase (Firestore, Auth, Cloud Messaging)",
         "keyFeatures":
             "User authentication, real-time messaging, push notifications, image/video sharing.",
@@ -241,10 +292,20 @@ class ProjectsSection extends StatelessWidget {
     );
   }
 
+  // Future<void> _launchURL(String url) async {
+  //   final Uri uri = Uri.parse(url);
+  //   if (await canLaunchUrl(uri)) {
+  //     await launchUrl(uri);
+  //   }
+  // }
   Future<void> _launchURL(String url) async {
     final Uri uri = Uri.parse(url);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri);
+
+    if (!await launchUrl(
+      uri,
+      mode: LaunchMode.externalApplication,
+    )) {
+      throw Exception('Could not launch $url');
     }
   }
 }

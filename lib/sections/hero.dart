@@ -1,15 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter/foundation.dart';
 
 class HeroSection extends StatelessWidget {
   const HeroSection({super.key});
 
+  // Future<void> openCV() async {
+  //   const url = 'web/assets/Ragab_Eid_Sedik_Flutter_developer.pdf';
+  //   final uri = Uri.parse(url);
+  //   await launchUrl(uri);
+  // }
+  // Future<void> openCV() async {
+  //   final uri = Uri.parse('/assets/Ragab_Eid_Sedik_Flutter_developer.pdf');
+  //   if (!await launchUrl(
+  //     uri,
+  //     mode: LaunchMode.externalApplication,
+  //   )) {
+  //     throw 'Could not launch CV';
+  //   }
+  // }
+
   Future<void> openCV() async {
-    const url = 'web/assets/Ragab_CV.pdf';
-    final uri = Uri.parse(url);
-    await launchUrl(uri);
+    if (kIsWeb) {
+      // ===== Flutter Web =====
+      final uri = Uri.parse('/assets/Ragab_Eid_Sedik_Flutter_developer.pdf');
+      await launchUrl(uri);
+    } else {
+      // ===== Android / iOS =====
+      final uri = Uri.parse(
+        // 'https://your-domain.com/assets/Ragab_Eid_Sedik_Flutter_developer.pdf',
+        'https://boxwood-ray-479905-e5.web.app/assets/Ragab_Eid_Sedik_Flutter_developer.pdf',
+      );
+      if (!await launchUrl(
+        uri,
+        mode: LaunchMode.externalApplication,
+      )) {
+        throw 'Could not launch CV';
+      }
+    }
   }
 
+// firebase deploy
   @override
   Widget build(BuildContext context) {
     return Container(

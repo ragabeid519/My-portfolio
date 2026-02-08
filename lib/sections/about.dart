@@ -17,8 +17,8 @@ class AboutSection extends StatelessWidget {
           const SizedBox(height: 15),
           const CircleAvatar(
             radius: 70, // يمكنك تغيير حجم الصورة هنا
-            backgroundImage: NetworkImage(
-              'web/assets/profile.jpg', // استبدل هذا بالرابط الصحيح للصورة
+            backgroundImage: AssetImage(
+              'web/assets/profile.jpg',
             ),
           ),
           const SizedBox(height: 15),
