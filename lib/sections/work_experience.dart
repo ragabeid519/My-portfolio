@@ -1,212 +1,201 @@
 import 'package:flutter/material.dart';
 
-class WorkExperienceSection extends StatelessWidget {
-  const WorkExperienceSection({super.key});
+class ProfessionalExperienceSection extends StatelessWidget {
+  const ProfessionalExperienceSection({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final colors = Theme.of(context).colorScheme;
+    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    Color primaryColor = const Color(0xff00d9ff); // اللون السماوي (Cyan)
+    Color bgColor = isDarkMode ? const Color(0xff0f172a) : Colors.grey;
+    Color cardColor = isDarkMode ? const Color(0xff1e293b) : Colors.white;
+    Color textColor = isDarkMode ? Colors.white : Colors.black87;
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 80, horizontal: 24),
-      child: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 1100),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Work Experience",
-                style: TextStyle(
-                  fontSize: 42,
-                  fontWeight: FontWeight.w600,
-                  color: colors.onBackground,
-                ),
-              ),
-              const SizedBox(height: 10),
-              Text(
-                "My professional journey is marked by a dedication to crafting robust and intuitive mobile experiences.",
-                style: TextStyle(
-                  fontSize: 16,
-                  color: colors.onBackground.withOpacity(0.6),
-                ),
-              ),
-              const SizedBox(height: 60),
+    return Container(
+      color: bgColor,
+      padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 80),
+      child: Column(
+        children: [
+          // العنوان الرئيسي
+          RichText(
+            text: TextSpan(
+              style: TextStyle(
+                  fontSize: 40, fontWeight: FontWeight.bold, color: textColor),
+              children: [
+                const TextSpan(text: "Professional "),
+                TextSpan(
+                    text: "Experience", style: TextStyle(color: primaryColor)),
+              ],
+            ),
+          ),
+          const SizedBox(height: 60),
 
-              /// Timeline
-              LayoutBuilder(
-                builder: (context, constraints) {
-                  final isMobile = constraints.maxWidth < 800;
-
-                  return Column(
+          // محتوى الخبرة والتعليم
+          LayoutBuilder(builder: (context, constraints) {
+            bool isMobile = constraints.maxWidth < 900;
+            return Flex(
+              direction: isMobile ? Axis.vertical : Axis.horizontal,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // عمود الخبرة (Experience)
+                Expanded(
+                  flex: isMobile ? 0 : 1,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _TimelineItem(
-                        isLeft: !isMobile,
-                        isMobile: isMobile,
-                        title: "Software Engineer & Flutter Developer",
-                        company: "TechInnovate Solutions",
-                        date: "June 2022 – Present",
-                        points: const [
-                          "Led end-to-end development of high-performance Flutter applications.",
-                          "Implemented efficient state management using BLoC and Provider.",
-                          "Collaborated with cross-functional teams to define requirements.",
-                          "Achieved a 20% reduction in app load times.",
-                        ],
+                      _buildSectionTitle(
+                          "Experience", Icons.work_outline, textColor),
+                      const SizedBox(height: 30),
+                      _buildTimelineItem(
+                        title: "Cross Platform Mobile App Developer",
+                        organization:
+                            "Digital Egypt Pioneers Initiative (DEPI)",
+                        date: "11/2025 - Present",
+                        description:
+                            "• Developed cross-platform mobile apps using Flutter & Dart following Clean Architecture.\n• Implemented BLoC/Cubit state management and integrated REST APIs, Firebase, and Google Maps.",
+                        primaryColor: primaryColor,
+                        cardColor: cardColor,
+                        textColor: textColor,
                       ),
-                      const SizedBox(height: 40),
-                      _TimelineItem(
-                        isLeft: false,
-                        isMobile: isMobile,
-                        title: "Junior Flutter Developer",
-                        company: "MobileCraft Studios",
-                        date: "January 2021 – May 2022",
-                        points: const [
-                          "Contributed to development and maintenance of key mobile features.",
-                          "Assisted in bug identification, debugging, and resolution.",
-                          "Gained hands-on experience with Firebase services.",
-                          "Participated in daily stand-ups and agile sprint cycles.",
-                        ],
+                      _buildTimelineItem(
+                        title: "Mobile App Development Intern",
+                        organization:
+                            "National Telecommunication Institute (NTI)",
+                        date: "06/2025 - 08/2025",
+                        description:
+                            "• Participated in a 120-hour internship in mobile development with Flutter and Dart.\n• Worked on practical app development projects with backend integration and real-time updates.",
+                        primaryColor: primaryColor,
+                        cardColor: cardColor,
+                        textColor: textColor,
+                        isLast: true,
                       ),
                     ],
-                  );
-                },
-              ),
-            ],
-          ),
-        ),
+                  ),
+                ),
+
+                if (!isMobile) const SizedBox(width: 50),
+                if (isMobile) const SizedBox(height: 50),
+
+                // عمود التعليم (Education)
+                Expanded(
+                  flex: isMobile ? 0 : 1,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildSectionTitle(
+                          "Education", Icons.school_outlined, textColor),
+                      const SizedBox(height: 30),
+                      _buildTimelineItem(
+                        title: "B.Sc. Computer and Artificial Intelligence",
+                        organization: "Beni-Suef University",
+                        date: "2018 - 2022",
+                        description:
+                            "Major: Computer Science | Grade: Good\nFocus on Software Engineering and AI fundamentals.",
+                        primaryColor: primaryColor,
+                        cardColor: cardColor,
+                        textColor: textColor,
+                        isLast: true,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            );
+          }),
+        ],
       ),
     );
   }
-}
 
-// ======================================================
-
-class _TimelineItem extends StatelessWidget {
-  final bool isLeft;
-  final bool isMobile;
-  final String title;
-  final String company;
-  final String date;
-  final List<String> points;
-
-  const _TimelineItem({
-    required this.isLeft,
-    required this.isMobile,
-    required this.title,
-    required this.company,
-    required this.date,
-    required this.points,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = Theme.of(context).colorScheme;
-
+  Widget _buildSectionTitle(String title, IconData icon, Color textColor) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (!isMobile && isLeft) Expanded(child: _buildCard(context)),
-
-        /// Timeline Line & Dot
-        Column(
-          children: [
-            Container(
-              width: 2,
-              height: 120,
-              color: colors.primary.withOpacity(0.3),
-            ),
-            Container(
-              width: 14,
-              height: 14,
-              decoration: BoxDecoration(
-                color: colors.primary,
-                shape: BoxShape.circle,
-              ),
-            ),
-            Container(
-              width: 2,
-              height: 120,
-              color: colors.primary.withOpacity(0.3),
-            ),
-          ],
+        Icon(icon, color: textColor, size: 28),
+        const SizedBox(width: 10),
+        Text(
+          title,
+          style: TextStyle(
+              fontSize: 28, fontWeight: FontWeight.bold, color: textColor),
         ),
-
-        if (isMobile || !isLeft)
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 24),
-              child: _buildCard(context),
-            ),
-          ),
       ],
     );
   }
 
-  Widget _buildCard(BuildContext context) {
-    final colors = Theme.of(context).colorScheme;
-
-    return Container(
-      padding: const EdgeInsets.all(22),
-      decoration: BoxDecoration(
-        color: colors.surface,
-        borderRadius: BorderRadius.circular(14),
-        boxShadow: [
-          BoxShadow(
-            color: colors.shadow.withOpacity(0.15),
-            blurRadius: 25,
-            offset: const Offset(0, 12),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+  Widget _buildTimelineItem({
+    required String title,
+    required String organization,
+    required String date,
+    required String description,
+    required Color primaryColor,
+    required Color cardColor,
+    required Color textColor,
+    bool isLast = false,
+  }) {
+    return IntrinsicHeight(
+      child: Row(
         children: [
-          Text(
-            title,
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: colors.onSurface,
-            ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            company,
-            style: TextStyle(
-              fontSize: 15,
-              color: colors.primary,
-            ),
-          ),
-          Align(
-            alignment: Alignment.centerRight,
-            child: Text(
-              date,
-              style: TextStyle(
-                fontSize: 12,
-                color: colors.onSurface.withOpacity(0.5),
+          // خط التايملاين والدوائر
+          Column(
+            children: [
+              Container(
+                width: 15,
+                height: 15,
+                decoration: BoxDecoration(
+                  color: primaryColor,
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                        color: primaryColor.withOpacity(0.5), blurRadius: 8)
+                  ],
+                ),
               ),
-            ),
+              if (!isLast)
+                Expanded(
+                  child: Container(
+                    width: 2,
+                    color: primaryColor.withOpacity(0.3),
+                  ),
+                ),
+            ],
           ),
-          const SizedBox(height: 12),
-          ...points.map(
-            (p) => Padding(
-              padding: const EdgeInsets.only(bottom: 8),
-              child: Row(
+          const SizedBox(width: 20),
+          // كارت التفاصيل
+          Expanded(
+            child: Container(
+              margin: const EdgeInsets.only(bottom: 30),
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: cardColor,
+                borderRadius: BorderRadius.circular(15),
+                border: Border.all(color: primaryColor.withOpacity(0.1)),
+              ),
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "• ",
-                    style: TextStyle(color: colors.primary),
+                  Row(
+                    children: [
+                      Icon(Icons.calendar_month, color: primaryColor, size: 16),
+                      const SizedBox(width: 5),
+                      Text(date,
+                          style: TextStyle(
+                              color: primaryColor,
+                              fontWeight: FontWeight.bold)),
+                    ],
                   ),
-                  Expanded(
-                    child: Text(
-                      p,
+                  const SizedBox(height: 10),
+                  Text(title,
                       style: TextStyle(
-                        fontSize: 14,
-                        height: 1.4,
-                        color: colors.onSurface.withOpacity(0.85),
-                      ),
-                    ),
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: textColor)),
+                  Text(organization,
+                      style: TextStyle(
+                          fontSize: 14, color: primaryColor.withOpacity(0.8))),
+                  const SizedBox(height: 10),
+                  Text(
+                    description,
+                    style: TextStyle(
+                        color: textColor.withOpacity(0.6), height: 1.5),
                   ),
                 ],
               ),

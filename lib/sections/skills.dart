@@ -1,171 +1,131 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SkillsSection extends StatelessWidget {
   const SkillsSection({super.key});
 
-  int getCrossAxisCount(double width) {
-    if (width > 1200) return 3;
-    if (width > 800) return 2;
-    return 1;
-  }
-
   @override
   Widget build(BuildContext context) {
-    final categories = [
+    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    Color primaryColor = const Color(0xff00d9ff);
+    Color cardColor = isDarkMode ? const Color(0xff1e293b) : Colors.white;
+    Color textColor = isDarkMode ? Colors.white : Colors.black87;
+
+    // قائمة المهارات بناءً على الـ CV الخاص بك
+    final List<Map<String, dynamic>> skills = [
       {
-        "title": "PROGRAMMING LANGUAGES",
-        "icon": Icons.code,
-        "skills": ["Dart", "Java", "Kotlin"],
+        "title": "Mobile Development",
+        "icon": FontAwesomeIcons.mobileScreenButton,
+        "subtitle": "Flutter, Dart, Cross-platform, Responsive Design",
       },
       {
-        "title": "MOBILE DEVELOPMENT",
-        "icon": Icons.phone_android,
-        "skills": ["Flutter", "Firebase", "REST APIs"],
+        "title": "State Management",
+        "icon": FontAwesomeIcons.layerGroup,
+        "subtitle": "BLoC, Provider, Riverpod, Cubit",
       },
       {
-        "title": "TOOLS & TECHNOLOGIES",
-        "icon": Icons.settings,
-        "skills": ["Git", "Android Studio", "VS Code"],
+        "title": "Architecture",
+        "icon": FontAwesomeIcons.gears,
+        "subtitle":
+            "Clean Architecture, MVVM, SOLID Principles, Design Patterns",
       },
       {
-        "title": "OTHER SKILLS",
-        "icon": Icons.lightbulb_outline,
-        "skills": ["UI/UX Principles", "State Management", "Database Design"],
+        "title": "Backend Integration",
+        "icon": FontAwesomeIcons.database,
+        "subtitle": "RESTful APIs, Firebase, Odoo ERP, Payment Gateways",
+      },
+      {
+        "title": "Tools",
+        "icon": FontAwesomeIcons.wrench,
+        "subtitle": "Android Studio, Git/GitHub, Postman, Figma, Adobe XD",
+      },
+      {
+        "title": "Database",
+        "icon": FontAwesomeIcons.server,
+        "subtitle": "Firestore, Hive, SQLite, Shared Preferences",
       },
     ];
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 80, horizontal: 24),
-      child: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 1200),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                "Technical Skills",
-                style: TextStyle(
-                  fontSize: 42,
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: 1.2,
-                ),
-              ),
-              const SizedBox(height: 10),
-              const Text(
-                "Technologies & tools I use to build scalable applications",
-                style: TextStyle(
-                  fontSize: 16,
-                  // color: Colors.grey,
-                ),
-              ),
-              const SizedBox(height: 50),
-              LayoutBuilder(
-                builder: (context, constraints) {
-                  return GridView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: getCrossAxisCount(constraints.maxWidth),
-                      crossAxisSpacing: 24,
-                      mainAxisSpacing: 24,
-                      mainAxisExtent: 240,
-                    ),
-                    itemCount: categories.length,
-                    itemBuilder: (context, index) {
-                      final item = categories[index];
-                      return SkillCard(
-                        title: item['title'] as String,
-                        icon: item['icon'] as IconData,
-                        skills: List<String>.from(item['skills'] as List),
-                      );
-                    },
-                  );
-                },
-              ),
-            ],
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 80),
+      color: isDarkMode ? const Color(0xff0f172a) : Colors.grey[100],
+      child: Column(
+        children: [
+          Text(
+            "My Skills",
+            style: TextStyle(
+              fontSize: 40,
+              fontWeight: FontWeight.bold,
+              color: textColor,
+            ),
           ),
-        ),
+          const SizedBox(height: 50),
+
+          // شبكة المهارات المتجاوبة
+          LayoutBuilder(builder: (context, constraints) {
+            return GridView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: skills.length,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: constraints.maxWidth < 600
+                    ? 1
+                    : (constraints.maxWidth < 1000 ? 2 : 3),
+                crossAxisSpacing: 25,
+                mainAxisSpacing: 25,
+                childAspectRatio: 1.5,
+              ),
+              itemBuilder: (context, index) {
+                return _buildSkillCard(
+                  skills[index]['title'],
+                  skills[index]['subtitle'],
+                  skills[index]['icon'],
+                  primaryColor,
+                  cardColor,
+                  textColor,
+                );
+              },
+            );
+          }),
+        ],
       ),
     );
   }
-}
 
-// =================== Skill Card ===================
-
-class SkillCard extends StatefulWidget {
-  final String title;
-  final IconData icon;
-  final List<String> skills;
-
-  const SkillCard({
-    super.key,
-    required this.title,
-    required this.icon,
-    required this.skills,
-  });
-
-  @override
-  State<SkillCard> createState() => _SkillCardState();
-}
-
-class _SkillCardState extends State<SkillCard> {
-  bool isHover = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return MouseRegion(
-      onEnter: (_) => setState(() => isHover = true),
-      onExit: (_) => setState(() => isHover = false),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 250),
-        transform: isHover
-            ? (Matrix4.identity()..translate(0, -8))
-            : Matrix4.identity(),
-        decoration: BoxDecoration(
-          // color: Colors.white,
-          borderRadius: BorderRadius.circular(14),
-          boxShadow: [
-            BoxShadow(
-              color: isHover ? Colors.black12 : Colors.black.withOpacity(0.06),
-              blurRadius: 25,
-              offset: const Offset(0, 12),
-            ),
-          ],
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(22),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Icon(widget.icon, color: Colors.brown, size: 22),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: Text(
-                      widget.title,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 1,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 18),
-              ...widget.skills.map(
-                (skill) => Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
-                  child: Text(
-                    "• $skill",
-                    style: const TextStyle(fontSize: 15),
-                  ),
-                ),
-              ),
-            ],
+  Widget _buildSkillCard(String title, String subtitle, IconData icon,
+      Color primaryColor, Color cardColor, Color textColor) {
+    return Container(
+      padding: const EdgeInsets.all(25),
+      decoration: BoxDecoration(
+        color: cardColor,
+        borderRadius: BorderRadius.circular(15),
+        border: Border.all(color: primaryColor.withOpacity(0.2), width: 1),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 10,
+            offset: const Offset(0, 5),
           ),
-        ),
+        ],
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(icon, color: primaryColor, size: 40),
+          const SizedBox(height: 20),
+          Text(
+            title,
+            style: TextStyle(
+                fontSize: 20, fontWeight: FontWeight.bold, color: textColor),
+          ),
+          const SizedBox(height: 12),
+          Text(
+            subtitle,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                color: textColor.withOpacity(0.7), fontSize: 14, height: 1.4),
+          ),
+        ],
       ),
     );
   }

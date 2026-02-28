@@ -170,7 +170,7 @@ class ContactSection extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 42,
                   fontWeight: FontWeight.w500,
-                  color: colors.onBackground,
+                  color: colors.onSurface,
                 ),
               ),
               const SizedBox(height: 12),
@@ -178,7 +178,7 @@ class ContactSection extends StatelessWidget {
                 "Ready to collaborate? Let's discuss your next project!",
                 style: TextStyle(
                   fontSize: 18,
-                  color: colors.onBackground.withOpacity(0.6),
+                  color: colors.onSurface.withOpacity(0.6),
                 ),
               ),
               const SizedBox(height: 60),
