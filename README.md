@@ -27,7 +27,8 @@ This is a professional personal portfolio website built with **Flutter Web**. It
 ## 📸 Project Showcase
 
 | Section | Preview |
-![alt text](image.png)
+![alt text](myportscreen.png)
+
 | ------- | ------- |
 | **Contact** | Interactive contact form. |
 | **Projects** | Interactive project showcase. |
