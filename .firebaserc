@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "boxwood-ray-479905-e5"
-  }
+    "default": "boxwood-ray-479905-e5",
+    "ragab-portfolio": "ragab-eid-511"
+  },
+  "targets": {},
+  "etags": {}
 }

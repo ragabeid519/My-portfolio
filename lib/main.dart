@@ -76,3 +76,7 @@ class HomePage extends StatelessWidget {
     );
   }
 }
+
+
+// flutter build web 
+// firebase deploy
