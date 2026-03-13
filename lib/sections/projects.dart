@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ragab_portfolio/providers/theme_provider.dart';
+import 'package:readmore/readmore.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ProjectsSection extends StatelessWidget {
@@ -10,6 +11,28 @@ class ProjectsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<Map<String, dynamic>> projects = [
       // قائمة المشاريع مع التفاصيل1
+      {
+        "title": "AI-Powered Translator App",
+        "description":
+            "A fast and resilient real-time translation mobile application. Built with Clean Architecture, it ensures a seamless multilingual communication experience while maintaining a scalable and easily testable codebase.",
+        "image": "web/assets/translator_app.png",
+        "technologies": "Flutter, Dart, MyMemory API, GetX, Clean Architecture",
+        "keyFeatures":
+            """🌐 Real-Time Translation: Instant and accurate text translation across multiple languages using MyMemory API.
+
+🛡️ Robust Error Handling: Advanced management of network failures and API edge cases (e.g., gracefully handling 400 Bad Requests).
+
+🏗️ Clean Architecture: Strict separation of business logic from the UI layer for high maintainability.
+
+🎨 Intuitive UI: A clean, responsive design providing a frictionless user experience.""",
+        "impact":
+            """Technical Excellence: Demonstrated advanced problem-solving by efficiently parsing JSON and managing API rate limits.
+
+Stable Performance: Achieved a crash-free experience even during network interruptions.
+
+Scalability: Built a modular foundation ready for future feature expansions.""",
+        "github": "https://github.com/ragabeid519/translator-app.git"
+      },
       {
         "title": "User Notes App – Smart & Secure Note Taking",
         "description":
@@ -217,14 +240,19 @@ Optimized Performance: Leveraged reactive programming to ensure that calculation
           style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 10),
-        SizedBox(
-          height: 60, // تثبيت مساحة الوصف لتوحيد شكل الكروت
-          child: Text(
-            project['description'],
-            maxLines: 3,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(fontSize: 14, height: 1.4),
-          ),
+        ReadMoreText(
+          project['description'],
+          trimLines: 3,
+          // overflow: TextOverflow.ellipsis,
+          trimMode: TrimMode.Line,
+          trimCollapsedText: 'Show more',
+          trimExpandedText: 'Show less',
+          lessStyle: const TextStyle(
+              fontSize: 12, fontWeight: FontWeight.bold, color: Colors.orange),
+          moreStyle: const TextStyle(
+              fontSize: 12, fontWeight: FontWeight.bold, color: Colors.orange),
+
+          style: const TextStyle(fontSize: 14, height: 1.4),
         ),
         const SizedBox(height: 15),
         // عرض التفاصيل مع مرونة في النص
