@@ -42,7 +42,7 @@ This is a professional personal portfolio website built with **Flutter Web**. It
 
 1.  **Clone the repo:**
     ```bash
-    git clone git@github.com:RagabEid5111999/my_portfolio_ragab.git
+    git clone git@github.com:ragabeid519/My-portfolio.git
     ```
 2.  **Install dependencies:**
     ```bash
