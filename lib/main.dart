@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ragab_portfolio/sections/achievement.dart';
 import 'package:ragab_portfolio/sections/final_thoughts_section.dart';
-import 'package:ragab_portfolio/sections/testimonial.dart';
 import 'package:ragab_portfolio/sections/work_experience.dart';
 import 'providers/theme_provider.dart';
 import 'sections/hero.dart';
@@ -67,7 +66,7 @@ class HomePage extends StatelessWidget {
             ProjectsSection(),
             ServicesSection(),
             AchievementsSection(),
-            TestimonialsSection(),
+            // TestimonialsSection(),
             ContactSection(),
             FinalThoughtsSection(),
           ],

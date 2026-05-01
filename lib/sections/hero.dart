@@ -18,8 +18,9 @@ class HeroSection extends StatelessWidget {
 
   Future<void> openCV() async {
     final String url = kIsWeb
-        ? '/assets/Ragab_Eid_Sedik_Flutter_developer.pdf'
-        : 'https://boxwood-ray-479905-e5.web.app/assets/Ragab_Eid_Sedik_Flutter_developer.pdf';
+        ? 'https://drive.google.com/file/d/1Rmf16LwqKEWnPx3NXvaX9Ftfy663Lwzo/view?usp=drive_link'
+        : 'https://drive.google.com/file/d/1Rmf16LwqKEWnPx3NXvaX9Ftfy663Lwzo/view?usp=drive_link';
+
     _launchURL(url);
   }
 
@@ -123,8 +124,12 @@ class HeroSection extends StatelessWidget {
                         _socialIcon(Icons.code,
                             "https://github.com/ragabeid519", primaryColor),
                         const SizedBox(width: 15),
-                        _socialIcon(Icons.email,
-                            "mailto:ragabeid5111999@gmail.com", primaryColor),
+                        _socialIcon(
+                            Icons.email,
+                            // "mailto:ragabeid5111999@gmail.com", primaryColor),
+                            // to open email client with pre-filled email address
+                            "mailto:ragabeid5111999@gmail.com?subject=Hello Ragab Eid&body=I would like to connect with you",
+                            primaryColor),
                       ],
                     ),
                     const SizedBox(height: 40),
