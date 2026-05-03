@@ -5,84 +5,158 @@ class AchievementsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        // تحديد عدد الأعمدة بناءً على عرض الشاشة
-        double width = constraints.maxWidth;
-        int crossAxisCount = width > 900 ? 3 : (width > 600 ? 2 : 1);
+    final bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final Color primaryColor = const Color(0xff00d9ff);
+    final Color bgColor =
+        isDarkMode ? const Color(0xff0f172a) : const Color(0xfff8fafc);
+    final Color cardColor = isDarkMode ? const Color(0xff1e293b) : Colors.white;
+    final Color textColor = isDarkMode ? Colors.white : Colors.black87;
+    final Color subTextColor = isDarkMode ? Colors.white70 : Colors.black54;
 
-        return Container(
-          padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
-          // color: const Color(0xFFFDF9F0),
+    final List<Map<String, dynamic>> achievements = [
+      {
+        "icon": Icons.workspace_premium_outlined,
+        "title": "DEPI Flutter Training",
+        "description":
+            "Selected for the Digital Egypt Pioneers Initiative (DEPI), where I strengthened my practical experience in Flutter, Clean Architecture, state management, and real-world app development workflows.",
+      },
+      {
+        "icon": Icons.school_outlined,
+        "title": "NTI Mobile Development Internship",
+        "description":
+            "Completed a 120-hour internship at the National Telecommunication Institute (NTI), gaining hands-on experience in Flutter development, backend integration, and real-time mobile application features.",
+      },
+      {
+        "icon": Icons.rocket_launch_outlined,
+        "title": "Real-World Flutter Projects",
+        "description":
+            "Built multiple practical Flutter applications including educational systems, location-based solutions, productivity tools, and API-integrated apps with a focus on performance and usability.",
+      },
+      {
+        "icon": Icons.architecture_outlined,
+        "title": "Strong Engineering Practices",
+        "description":
+            "Applied Clean Architecture, SOLID principles, and structured state management patterns such as BLoC, Provider, and GetX across different projects to improve maintainability and scalability.",
+      },
+      {
+        "icon": Icons.cloud_done_outlined,
+        "title": "Backend & Service Integration",
+        "description":
+            "Integrated Firebase, Supabase, REST APIs, local storage, notifications, and geolocation services into cross-platform apps to solve practical product requirements.",
+      },
+      {
+        "icon": Icons.person_search_outlined,
+        "title": "Portfolio & Continuous Growth",
+        "description":
+            "Built a professional portfolio showcasing selected projects and continuously improved technical presentation, project quality, and personal branding as a Flutter Developer.",
+      },
+    ];
+
+    return Container(
+      width: double.infinity,
+      color: bgColor,
+      padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 100),
+      child: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 1250),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Achievements & Recognition',
-                style: TextStyle(
-                  fontSize: 32,
-                  fontFamily: 'Serif',
-                  // color: Color(0xFF5D4037),
-                  fontWeight: FontWeight.w500,
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                decoration: BoxDecoration(
+                  color: primaryColor.withOpacity(0.10),
+                  borderRadius: BorderRadius.circular(30),
+                  border: Border.all(
+                    color: primaryColor.withOpacity(0.25),
+                  ),
+                ),
+                child: Text(
+                  "Professional Highlights",
+                  style: TextStyle(
+                    color: primaryColor,
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
-              const SizedBox(height: 60),
-              // استخدام Wrap لجعل البطاقات تنزل لسطر جديد إذا ضاق المكان
-              Wrap(
-                spacing: 20, // المسافة الأفقية
-                runSpacing: 50, // المسافة الرأسية عند الالتفاف
-                children: [
-                  _buildFlexibleCard(
-                    context,
-                    crossAxisCount,
-                    icon: Icons.rocket_launch_outlined,
-                    title: 'High-Impact Project Delivery',
-                    description:
-                        'Led the development of a flagship Flutter application that achieved a 25% increase in user engagement and 15% faster transaction processing for a key client.',
+              const SizedBox(height: 18),
+              RichText(
+                textAlign: TextAlign.center,
+                text: TextSpan(
+                  style: const TextStyle(
+                    fontSize: 40,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Poppins',
                   ),
-                  _buildFlexibleCard(
-                    context,
-                    crossAxisCount,
-                    icon: Icons.emoji_events_outlined,
-                    title: 'Client & Industry Recognition',
-                    description:
-                        'Consistently received top client satisfaction scores for robust and scalable solutions, recognized for technical excellence and timely project delivery.',
+                  children: [
+                    TextSpan(
+                      text: "Professional Highlights & ",
+                      style: TextStyle(color: textColor),
+                    ),
+                    TextSpan(
+                      text: "Milestones",
+                      style: TextStyle(color: primaryColor),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 16),
+              ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 760),
+                child: Text(
+                  "A snapshot of the training, project work, and technical progress that shaped my journey as a Flutter Developer.",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: subTextColor,
+                    height: 1.7,
                   ),
-                  _buildFlexibleCard(
-                    context,
-                    crossAxisCount,
-                    icon: Icons.door_sliding_outlined,
-                    title: 'Open Source & Technical Contributions',
-                    description:
-                        'Actively contributed to several open-source Flutter packages and authored technical articles on advanced Flutter techniques, sharing knowledge with the developer community.',
-                  ),
-                ],
+                ),
+              ),
+              const SizedBox(height: 50),
+              LayoutBuilder(
+                builder: (context, constraints) {
+                  int crossAxisCount = 3;
+                  double childAspectRatio = 1.18;
+
+                  if (constraints.maxWidth < 700) {
+                    crossAxisCount = 1;
+                    childAspectRatio = 1.45;
+                  } else if (constraints.maxWidth < 1050) {
+                    crossAxisCount = 2;
+                    childAspectRatio = 1.28;
+                  }
+
+                  return GridView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: achievements.length,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: crossAxisCount,
+                      crossAxisSpacing: 24,
+                      mainAxisSpacing: 24,
+                      childAspectRatio: childAspectRatio,
+                    ),
+                    itemBuilder: (context, index) {
+                      return AchievementCard(
+                        icon: achievements[index]['icon'],
+                        title: achievements[index]['title'],
+                        description: achievements[index]['description'],
+                        primaryColor: primaryColor,
+                        cardColor: cardColor,
+                        textColor: textColor,
+                        subTextColor: subTextColor,
+                      );
+                    },
+                  );
+                },
               ),
             ],
           ),
-        );
-      },
-    );
-  }
-
-  // دالة لحساب عرض البطاقة بناءً على عدد الأعمدة المتاحة
-  Widget _buildFlexibleCard(BuildContext context, int columns,
-      {required IconData icon,
-      required String title,
-      required String description}) {
-    return LayoutBuilder(builder: (context, constraints) {
-      // طرح المسافات (Spacing) من العرض الكلي وتقسيمه على عدد الأعمدة
-      double cardWidth = (constraints.maxWidth - (columns - 1) * 20) / columns;
-
-      return SizedBox(
-        width: cardWidth > 300 ? cardWidth : double.infinity,
-        child: AchievementCard(
-          icon: icon,
-          title: title,
-          description: description,
         ),
-      );
-    });
+      ),
+    );
   }
 }
 
@@ -90,76 +164,79 @@ class AchievementCard extends StatelessWidget {
   final IconData icon;
   final String title;
   final String description;
+  final Color primaryColor;
+  final Color cardColor;
+  final Color textColor;
+  final Color subTextColor;
 
   const AchievementCard({
     super.key,
     required this.icon,
     required this.title,
     required this.description,
+    required this.primaryColor,
+    required this.cardColor,
+    required this.textColor,
+    required this.subTextColor,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      clipBehavior: Clip.none,
-      alignment: Alignment.topCenter,
-      children: [
-        Container(
-          constraints: const BoxConstraints(minHeight: 220),
-          padding: const EdgeInsets.fromLTRB(20, 45, 20, 25),
-          decoration: BoxDecoration(
-            // color: Colors.white,
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(
-              color: const Color(0xFFFFCCBC),
-              width: 1.2,
+    return Container(
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        color: cardColor,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: primaryColor.withOpacity(0.16),
+          width: 1.2,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: primaryColor.withOpacity(0.05),
+            blurRadius: 18,
+            spreadRadius: 2,
+            offset: const Offset(0, 8),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 56,
+            height: 56,
+            decoration: BoxDecoration(
+              color: primaryColor.withOpacity(0.12),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Icon(
+              icon,
+              color: primaryColor,
+              size: 26,
             ),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontFamily: 'Serif',
-                  // color: Color(0xFF5D4037),
-                  fontWeight: FontWeight.bold,
-                  height: 1.2,
-                ),
-              ),
-              const SizedBox(height: 12),
-              Text(
-                description,
-                style: const TextStyle(
-                  fontSize: 14,
-                  // color: Color(0xFF795548),
-                  height: 1.6,
-                ),
-              ),
-            ],
+          const SizedBox(height: 20),
+          Text(
+            title,
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: textColor,
+              height: 1.3,
+            ),
           ),
-        ),
-        Positioned(
-          top: -25,
-          child: Container(
-            height: 50,
-            width: 50,
-            decoration: const BoxDecoration(
-                color: Color(0xFFF28B50),
-                shape: BoxShape.circle,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 4,
-                    offset: Offset(0, 2),
-                  )
-                ]),
-            child: Icon(icon, color: Colors.white, size: 24),
+          const SizedBox(height: 12),
+          Text(
+            description,
+            style: TextStyle(
+              fontSize: 14.5,
+              color: subTextColor,
+              height: 1.7,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

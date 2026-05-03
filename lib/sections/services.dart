@@ -5,117 +5,216 @@ class ServicesSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // قائمة الخدمات بناءً على الصورة المرفقة
+    final bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final Color primaryColor = const Color(0xff00d9ff);
+    final Color bgColor =
+        isDarkMode ? const Color(0xff111827) : const Color(0xfff8fafc);
+    final Color cardColor = isDarkMode ? const Color(0xff1e293b) : Colors.white;
+    final Color textColor = isDarkMode ? Colors.white : Colors.black87;
+    final Color subTextColor = isDarkMode ? Colors.white70 : Colors.black54;
+
     final List<Map<String, dynamic>> services = [
       {
         "title": "Custom Flutter App Development",
         "description":
-            "From concept to deployment, building bespoke cross-platform mobile applications tailored to specific business needs.",
-        "icon": Icons.app_registration, // أيقونة مشابهة للصورة
+            "Building cross-platform mobile applications from idea to deployment with clean, scalable, and maintainable Flutter code.",
+        "icon": Icons.phone_iphone_rounded,
       },
       {
-        "title": "Mobile App UI/UX Design & Implementation",
+        "title": "UI Implementation & Responsive Design",
         "description":
-            "Crafting intuitive user interfaces and seamless user experiences, ensuring engaging and accessible applications.",
-        "icon": Icons.person_outline,
+            "Transforming app designs into smooth, responsive, and user-friendly interfaces that work well across different screen sizes.",
+        "icon": Icons.design_services_outlined,
       },
       {
-        "title": "App Maintenance & Bug Fixes",
+        "title": "Backend & API Integration",
         "description":
-            "Providing ongoing support, identifying and resolving issues, and ensuring smooth operation of existing Flutter applications.",
+            "Integrating REST APIs, Firebase, and Supabase services including authentication, cloud data handling, and real-time features.",
+        "icon": Icons.cloud_sync_outlined,
+      },
+      {
+        "title": "State Management & App Architecture",
+        "description":
+            "Structuring applications using Clean Architecture and managing app state efficiently with BLoC, Provider, and GetX.",
+        "icon": Icons.account_tree_outlined,
+      },
+      {
+        "title": "Performance Optimization & Bug Fixing",
+        "description":
+            "Improving app performance, fixing issues, reducing complexity, and enhancing reliability for smoother user experiences.",
+        "icon": Icons.speed_rounded,
+      },
+      {
+        "title": "Maintenance & Feature Enhancement",
+        "description":
+            "Maintaining existing Flutter apps, refining old features, and adding new capabilities while preserving code quality and stability.",
         "icon": Icons.build_circle_outlined,
-      },
-      {
-        "title": "Performance Optimization",
-        "description":
-            "Enhancing app speed, responsiveness, and efficiency through code refactoring, asset optimization, and profiling.",
-        "icon": Icons.speed,
-      },
-      {
-        "title": "Firebase Integration & Backend Services",
-        "description":
-            "Leveraging Firebase for scalable backend solutions, including authentication, databases, cloud functions, and analytics.",
-        "icon": Icons.cloud_queue,
       },
     ];
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 60),
-      // color: const Color(0xFFFFFBF2), // لون الخلفية الكريمي
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            "Services I Offer",
-            style: TextStyle(
-              fontSize: 34,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'Serif',
-              // color: Color(0xFF4E342E), // اللون البني الغامق للعنوان
-            ),
+      width: double.infinity,
+      color: bgColor,
+      padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 100),
+      child: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 1250),
+          child: Column(
+            children: [
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                decoration: BoxDecoration(
+                  color: primaryColor.withOpacity(0.10),
+                  borderRadius: BorderRadius.circular(30),
+                  border: Border.all(
+                    color: primaryColor.withOpacity(0.25),
+                  ),
+                ),
+                child: Text(
+                  "What I can deliver",
+                  style: TextStyle(
+                    color: primaryColor,
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 18),
+              RichText(
+                textAlign: TextAlign.center,
+                text: TextSpan(
+                  style: const TextStyle(
+                    fontSize: 40,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Poppins',
+                  ),
+                  children: [
+                    TextSpan(
+                      text: "What I Build & ",
+                      style: TextStyle(color: textColor),
+                    ),
+                    TextSpan(
+                      text: "How I Contribute",
+                      style: TextStyle(color: primaryColor),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 16),
+              ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 760),
+                child: Text(
+                  "A focused set of Flutter development services aimed at building reliable, scalable, and user-centered mobile applications.",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: subTextColor,
+                    height: 1.7,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 50),
+              LayoutBuilder(
+                builder: (context, constraints) {
+                  int crossAxisCount = 3;
+                  double childAspectRatio = 1.15;
+
+                  if (constraints.maxWidth < 700) {
+                    crossAxisCount = 1;
+                    childAspectRatio = 1.45;
+                  } else if (constraints.maxWidth < 1050) {
+                    crossAxisCount = 2;
+                    childAspectRatio = 1.20;
+                  }
+
+                  return GridView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: services.length,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: crossAxisCount,
+                      crossAxisSpacing: 24,
+                      mainAxisSpacing: 24,
+                      childAspectRatio: childAspectRatio,
+                    ),
+                    itemBuilder: (context, index) {
+                      return _buildServiceCard(
+                        service: services[index],
+                        primaryColor: primaryColor,
+                        cardColor: cardColor,
+                        textColor: textColor,
+                        subTextColor: subTextColor,
+                      );
+                    },
+                  );
+                },
+              ),
+            ],
           ),
-          const SizedBox(height: 40),
-          // استخدام Wrap لجعل الكروت مرنة وتنتقل للسطر التالي تلقائياً
-          Wrap(
-            spacing: 25, // المسافة الأفقية بين الكروت
-            runSpacing: 25, // المسافة الرأسية بين الكروت
-            children:
-                services.map((service) => _buildServiceCard(service)).toList(),
-          ),
-        ],
+        ),
       ),
     );
   }
 
-  Widget _buildServiceCard(Map<String, dynamic> service) {
+  Widget _buildServiceCard({
+    required Map<String, dynamic> service,
+    required Color primaryColor,
+    required Color cardColor,
+    required Color textColor,
+    required Color subTextColor,
+  }) {
     return Container(
-      width: 350, // عرض الكارت
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        // color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
+        color: cardColor,
+        borderRadius: BorderRadius.circular(20),
         border: Border.all(
-            color: const Color(0xFFFFE0B2), width: 1), // إطار برتقالي فاتح
+          color: primaryColor.withOpacity(0.16),
+          width: 1.2,
+        ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.02),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
+            color: primaryColor.withOpacity(0.05),
+            blurRadius: 18,
+            spreadRadius: 2,
+            offset: const Offset(0, 8),
           ),
         ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // الأيقونة الدائرية البرتقالية كما في الصورة
           Container(
-            padding: const EdgeInsets.all(10),
-            decoration: const BoxDecoration(
-              color: Color(0xFFFFB74D), // لون برتقالي مشرق للأيقونة
-              shape: BoxShape.circle,
+            width: 56,
+            height: 56,
+            decoration: BoxDecoration(
+              color: primaryColor.withOpacity(0.12),
+              borderRadius: BorderRadius.circular(16),
             ),
             child: Icon(
               service['icon'],
-              color: Colors.white,
-              size: 28,
+              color: primaryColor,
+              size: 26,
             ),
           ),
           const SizedBox(height: 20),
           Text(
             service['title'],
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 20,
-              fontWeight: FontWeight.w600,
-              // color: Color(0xFF5D4037),
+              fontWeight: FontWeight.bold,
+              color: textColor,
+              height: 1.3,
             ),
           ),
           const SizedBox(height: 12),
           Text(
             service['description'],
-            style: const TextStyle(
-              fontSize: 15,
-              // color: Colors.black54,
-              height: 1.5, // تباعد الأسطر لراحة العين
+            style: TextStyle(
+              fontSize: 14.5,
+              color: subTextColor,
+              height: 1.7,
             ),
           ),
         ],
