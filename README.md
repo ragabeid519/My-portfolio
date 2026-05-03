@@ -212,7 +212,12 @@ Modify content directly in `lib/sections/`:
 ### Images
 
 ```dart
-Image.asset('web/assets/profile.png')
+
+Image(
+  image: AssetImage('assets/images/your_image.jpg'),
+  fit: BoxFit.cover,
+),
+
 ```
 
 ---
