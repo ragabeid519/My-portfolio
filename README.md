@@ -212,6 +212,7 @@ Modify content directly in `lib/sections/`:
 ### Images
 
 ```dart
+![alt text](web/assets/profile.jpg)
 
 Image(
   image: AssetImage('assets/images/your_image.jpg'),
